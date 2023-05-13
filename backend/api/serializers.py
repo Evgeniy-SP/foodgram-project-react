@@ -284,14 +284,19 @@ class RecipeSerializerPost(serializers.ModelSerializer, CommonRecipe):
             ingredients_list.append(ingredient_to_check)
         return value
 
-    def add_tags_and_ingredients(self, tags_data, ingredients, recipe):
+    def add_tags(self, tags_data, recipe):
         """
-        Метод выполнения общих функции
-        для создания и изменения рецептов.
+        Метод добавления тегов к рецепту.
         """
         for tag_data in tags_data:
             recipe.tags.add(tag_data)
             recipe.save()
+        return recipe
+
+    def add_ingredients(self, ingredients, recipe):
+        """
+        Метод добавления ингредиетнов к рецепту.
+        """
         for ingredient in ingredients:
             if not IngredientRecipe.objects.filter(
                     ingredient_id=ingredient['ingredient']['id'],
@@ -331,7 +336,8 @@ class RecipeSerializerPost(serializers.ModelSerializer, CommonRecipe):
             text=text,
             cooking_time=cooking_time,
         )
-        recipe = self.add_tags_and_ingredients(tags_data, ingredients, recipe)
+        recipe = self.add_tags(tags_data, recipe)
+        recipe = self.add_ingredients(ingredients, recipe)
         return recipe
 
     def update(self, instance, validated_data):
@@ -342,8 +348,11 @@ class RecipeSerializerPost(serializers.ModelSerializer, CommonRecipe):
         ingredients = validated_data.pop('ingredientrecipes')
         TagRecipe.objects.filter(recipe=instance).delete()
         IngredientRecipe.objects.filter(recipe=instance).delete()
-        instance = self.add_tags_and_ingredients(
+        instance = self.add_tags(
             tags_data,
+            instance
+        )
+        instance = self.add_ingredients(
             ingredients,
             instance
         )
