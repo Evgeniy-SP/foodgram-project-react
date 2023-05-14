@@ -29,8 +29,8 @@ class CommonSubscribed(metaclass=serializers.SerializerMetaclass):
         if request.user.is_anonymous:
             return False
         return Subscribe.objects.filter(
-                user=request.user,
-                following__id=obj.id
+            user=request.user,
+            following__id=obj.id
         ).exists()
 
 
@@ -50,8 +50,8 @@ class CommonRecipe(metaclass=serializers.SerializerMetaclass):
         if request.user.is_anonymous:
             return False
         return Favorite.objects.filter(
-                user=request.user,
-                recipe__id=obj.id
+            user=request.user,
+            recipe__id=obj.id
         ).exists()
 
     def get_is_in_shopping_cart(self, obj):
@@ -62,8 +62,8 @@ class CommonRecipe(metaclass=serializers.SerializerMetaclass):
         if request.user.is_anonymous:
             return False
         return Cart.objects.filter(
-                user=request.user,
-                recipe__id=obj.id
+            user=request.user,
+            recipe__id=obj.id
         ).exists()
 
 
