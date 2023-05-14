@@ -102,6 +102,7 @@ class RecipeAdmin(admin.ModelAdmin):
         Метод для подсчета общего числа добавлений этого рецепта в избранное.
         """
         return Favorite.objects.filter(recipe=obj).count()
+
     count_favorite.short_description = 'Число добавлении в избранное'
 
 
