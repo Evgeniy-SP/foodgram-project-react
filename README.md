@@ -64,3 +64,6 @@ Cайт Foodgram - онлайн-сервис, на котором пользов
 - [POST] /api/recipes/{id}/favorite/ - Добавить рецепт в избранное.
 - [DEL] /api/users/{id}/subscribe/ - Отписаться от пользователя.
 - [GET] /api/ingredients/ - Список ингредиентов с возможностью поиска по имени.
+
+http://evgeniy-sp.sytes.net/
+http://51.250.104.36
