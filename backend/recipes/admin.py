@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from users.models import User
 from .models import (
@@ -29,7 +30,7 @@ class TagRecipeInline(admin.TabularInline):
     extra = 0
 
 
-class UserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     """
     Параметры админ зоны пользователя.
     """
@@ -46,7 +47,6 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ('name', 'measurement_unit')
     search_fields = ('name', )
     empty_value_display = '-пусто-'
-    list_filter = ('name',)
 
 
 class TagAdmin(admin.ModelAdmin):
@@ -118,7 +118,7 @@ class SubscribeAdmin(admin.ModelAdmin):
 
 admin.site.register(Cart, CartAdmin)
 admin.site.register(Favorite, FavoriteAdmin)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, CustomUserAdmin)
 admin.site.register(Subscribe, SubscribeAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Tag, TagAdmin)
